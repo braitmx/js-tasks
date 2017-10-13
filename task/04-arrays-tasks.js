@@ -170,14 +170,8 @@ function getStringsLength(arr) {
  *    [ 1, 'b', 'c'], 0, 'x'  => [ 'x', 1, 'b', 'c' ]
  */
 function insertItem(arr, item, index) {
-    /*   var result = [];
-   arr.map(function(el, i){
-    
-   if (index === i) {  result.push(item); result.push(el); } else result.push(el);
-});
-return result; в браузере работает */
 
-    throw new Error('Not implemented');
+  return arr.splice(index, 0, item);
 }
 
 /**
@@ -509,18 +503,18 @@ function toStringList(arr) {
  */
 function sortCitiesArray(arr) {
 
-   function arrSort(propName1, propName2) {
-    return function (a, b) {
+    function arrSort(propName1, propName2) {
+        return function (a, b) {
 
-        if (a[propName1] === b[propName1])
-            return a[propName2].localeCompare(b[propName2]);
-        else
-            return a[propName1].localeCompare(b[propName1]);
+            if (a[propName1] === b[propName1])
+                return a[propName2].localeCompare(b[propName2]);
+            else
+                return a[propName1].localeCompare(b[propName1]);
 
+        }
     }
-}
 
-return arr.sort(arrSort("country", "city"));
+    return arr.sort(arrSort("country", "city"));
 }
 
 /**
