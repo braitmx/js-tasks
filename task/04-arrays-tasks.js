@@ -171,7 +171,7 @@ function getStringsLength(arr) {
  */
 function insertItem(arr, item, index) {
 
-  return arr.splice(index, 0, item);
+    return arr.splice(index, 0, item);
 }
 
 /**
@@ -591,7 +591,7 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-    throw new Error('Not implemented');
+    return arr.filter((el, i, a) => a.indexOf(el) === i);
 }
 
 /**
@@ -641,7 +641,10 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    throw new Error('Not implemented');
+
+    let result = arr.map(childrenSelector);
+
+    return result.reduce((a, b) => a.concat(b));
 }
 
 
