@@ -661,7 +661,25 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-    throw new Error('Not implemented');
+    var len = indexes.length,
+        counter = 0;
+
+    function searchEl(indexes, counter) {
+
+        if (counter < len) {
+
+            var el = indexes[counter];
+            arr = arr[el];
+            counter++;
+
+            searchEl(indexes, counter);
+        }
+        else return arr;
+
+    }
+
+    searchEl(indexes, counter);
+    return arr;
 }
 
 
