@@ -702,7 +702,22 @@ function getElementByIndexes(arr, indexes) {
  * 
  */
 function swapHeadAndTail(arr) {
-    throw new Error('Not implemented');
+    var len = arr.length,
+        result = [];
+
+    if (len % 2 === 0) {
+        result = arr.slice(len / 2);
+        result = result.concat(arr.slice(0, len / 2));
+
+    } else {
+        var num = Math.trunc(len / 2) + 1;
+
+        result = arr.slice(num);
+        result.push(arr[num - 1]);
+        result = result.concat(arr.slice(0, num - 1));
+    }
+
+    return result;
 }
 
 
