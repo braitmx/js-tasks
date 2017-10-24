@@ -448,7 +448,7 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    return num.toString(n);
 }
 
 
@@ -465,7 +465,47 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    throw new Error('Not implemented');
+
+    var result = '';
+
+    function getPath(el) {
+
+        var index = el.indexOf('/', 1),
+            path = el.slice(0, index);
+        return path;
+    }
+
+    function comparePathes(pathes) {
+
+        var path = getPath(pathes[0]),
+            identity = true,
+            index = -1;
+
+        pathes = pathes.map(function (item) {
+
+            if (path != getPath(item)) identity = false;
+            else {
+                index = item.indexOf('/', 1);
+            }
+            return item.slice(index);
+        });
+
+        if (identity && index != -1) {
+            result += path;
+            comparePathes(pathes);
+        } else result += '/';
+
+    }
+
+    comparePathes(pathes);
+
+    if (result === '/') {
+        pathes.forEach(function (item, i) {
+            if (item[0] != '/') result = '';
+        });
+    }
+
+    return result;
 }
 
 
