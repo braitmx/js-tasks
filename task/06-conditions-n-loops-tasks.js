@@ -581,7 +581,20 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    var result =  undefined,
+    arr = position;
+   
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+            if ((arr[i][j] != undefined) && 
+                (j === 0 && (arr[i][j] === arr[i][j+1] && arr[i][j] === arr[i][j+2]) || 
+                (i === 0 && arr[i][j] === arr[i+1][j] && arr[i][j] === arr[i+2][j]) ||
+                (i === 0 && arr[i][j] === arr[i+1][j+1] && arr[i][j] === arr[i+2][j+2]) ||
+                (j === 0 && i === 2 && arr[i][j] === arr[i-1][j+1] && arr[i][j] === arr [j][i]))
+            )result = arr[i][j];
+        }
+    }
+    return result;
 }
 
 
