@@ -424,7 +424,47 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    var difference = endDate.valueOf() - startDate.valueOf(),
+        min = Math.trunc(difference / 60000),
+        hour = difference / (3.6 * Math.pow(10, 6)),
+        day = difference / (86.4 * Math.pow(10, 6)),
+        result = '';
+
+    function getDecimal(num) {
+        return +(num - parseInt(num)).toFixed(8);
+    }
+
+    if (difference <= 45000) result += 'a few seconds ago';
+
+    if (difference > 45000 && difference <= 90000) result = 'a minute ago';
+
+    if (difference > 90000 && difference <= 2.7 * Math.pow(10, 6)) result = (min > 2 ? min : 2) + ' minutes ago';
+
+    if (difference > 2.7 * Math.pow(10, 6) && difference <= 5.4 * Math.pow(10, 6)) result = 'an hour ago';
+
+    if (difference > 5.4 * Math.pow(10, 6) && difference <= 7.92 * Math.pow(10, 7)) {
+        if (getDecimal(hour) <= 0.5) hour = Math.trunc(hour)
+        else hour = Math.round(hour);
+        result = (hour > 2 ? hour : 2) + ' hours ago';
+    }
+
+    if (difference > 7.92 * Math.pow(10, 7) && difference <= 1.296 * Math.pow(10, 8)) result = 'a day ago';
+
+    if (difference > 1.296 * Math.pow(10, 8) && difference <= 2.16 * Math.pow(10, 9)) {
+        if (getDecimal(day) <= 0.5) day = Math.trunc(day)
+        else day = Math.round(day);
+        result = (day > 2 ? day : 2) + ' days ago';
+    }
+
+    if (difference > 2.16 * Math.pow(10, 9) && difference <= 3.888 * Math.pow(10, 9)) result = 'a month ago';
+
+    if (difference > 3.888 * Math.pow(10, 9) && difference <= 2.981 * Math.pow(10, 10)) result = Math.round(difference / (2.592 * Math.pow(10, 9))) + ' months ago';
+
+    if (difference > 2.981 * Math.pow(10, 10) && difference <= 4.709 * Math.pow(10, 10)) result = 'a year ago';
+
+    if (difference > 4.709 * Math.pow(10, 10)) result = Math.round(difference / (3.1536 * Math.pow(10, 10))) + ' years ago';
+
+    return result;
 }
 
 
@@ -529,23 +569,23 @@ function getCommonDirectoryPath(pathes) {
  */
 function getMatrixProduct(m1, m2) {
 
-        var m1rows = m1.length, m1cols = m1[0].length,
-            m2rows = m2.length, m2cols = m2[0].length,
-            result = [], tempArr = [];
+    var m1rows = m1.length, m1cols = m1[0].length,
+        m2rows = m2.length, m2cols = m2[0].length,
+        result = [], tempArr = [];
 
-        for (var k = 0; k < m1rows; k++) {
+    for (var k = 0; k < m1rows; k++) {
 
-            for (var i = 0; i < m1rows; i++) {
-                var temp = 0;
-                for (var j = 0; j < m2rows; j++) {
-                    temp += m1[k][j] * m2[j][i];
-                }
-                tempArr[i] = temp;
+        for (var i = 0; i < m1rows; i++) {
+            var temp = 0;
+            for (var j = 0; j < m2rows; j++) {
+                temp += m1[k][j] * m2[j][i];
             }
-            result[k] = tempArr;
-            tempArr = [];
+            tempArr[i] = temp;
         }
-        return result;
+        result[k] = tempArr;
+        tempArr = [];
+    }
+    return result;
 
 }
 
@@ -581,17 +621,17 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    var result =  undefined,
-    arr = position;
-   
+    var result = undefined,
+        arr = position;
+
     for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 3; j++) {
-            if ((arr[i][j] != undefined) && 
-                (j === 0 && (arr[i][j] === arr[i][j+1] && arr[i][j] === arr[i][j+2]) || 
-                (i === 0 && arr[i][j] === arr[i+1][j] && arr[i][j] === arr[i+2][j]) ||
-                (i === 0 && arr[i][j] === arr[i+1][j+1] && arr[i][j] === arr[i+2][j+2]) ||
-                (j === 0 && i === 2 && arr[i][j] === arr[i-1][j+1] && arr[i][j] === arr [j][i]))
-            )result = arr[i][j];
+            if ((arr[i][j] != undefined) &&
+                (j === 0 && (arr[i][j] === arr[i][j + 1] && arr[i][j] === arr[i][j + 2]) ||
+                    (i === 0 && arr[i][j] === arr[i + 1][j] && arr[i][j] === arr[i + 2][j]) ||
+                    (i === 0 && arr[i][j] === arr[i + 1][j + 1] && arr[i][j] === arr[i + 2][j + 2]) ||
+                    (j === 0 && i === 2 && arr[i][j] === arr[i - 1][j + 1] && arr[i][j] === arr[j][i]))
+            ) result = arr[i][j];
         }
     }
     return result;
